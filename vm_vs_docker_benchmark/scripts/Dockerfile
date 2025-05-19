@@ -1,15 +1,12 @@
 FROM python:3.10-slim
 
-# Copiar código al contenedor
+RUN apt update && apt install -y python3-pip git curl procps
+
 WORKDIR /app
+
 COPY . .
 
-# Dar permisos y ejecutar el script
-RUN chmod +x scripts/install_dependencies.sh && \
-    scripts/install_dependencies.sh
+RUN pip install --upgrade pip && pip install jupyter matplotlib psutil
 
-# Exponer puerto del Tetris
-EXPOSE 3000
-
-# Comando por defecto: iniciar servidor Tetris
-CMD ["npm", "start", "--prefix", "tetris_server"]
+EXPOSE 8000
+CMD ["python3", "scripts/run_server.py"]
