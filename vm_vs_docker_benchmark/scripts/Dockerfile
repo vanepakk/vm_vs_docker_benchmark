@@ -1,8 +1,15 @@
 FROM python:3.10-slim
-RUN apt update && apt install -y sysbench git curl procps \
-    && pip install --upgrade pip \
-    && pip install jupyter matplotlib psutil
+
+# Copiar código al contenedor
 WORKDIR /app
 COPY . .
-EXPOSE 8888
-CMD ["jupyter", "notebook", "--ip=0.0.0.0", "--allow-root", "--NotebookApp.token=''"]
+
+# Dar permisos y ejecutar el script
+RUN chmod +x scripts/install_dependencies.sh && \
+    scripts/install_dependencies.sh
+
+# Exponer puerto del Tetris
+EXPOSE 3000
+
+# Comando por defecto: iniciar servidor Tetris
+CMD ["npm", "start", "--prefix", "tetris_server"]
