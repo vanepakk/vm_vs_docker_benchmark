@@ -1,0 +1,8 @@
+Benchmark ejecutado en entorno: VM
+Duraci�n: 60 segundos
+N�mero de muestras: 60
+
+Resumen final:
+CPU promedio: 2.26%
+Memoria promedio: 79.76%
+Procesos promedio: 280.00

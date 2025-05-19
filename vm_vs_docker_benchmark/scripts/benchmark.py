@@ -1,42 +1,81 @@
 import psutil
 import time
 import csv
+import os
+import platform
 from datetime import datetime
-from pathlib import Path
 
-# Ruta a la carpeta "results"
-results_dir = Path(__file__).resolve().parent.parent / "results"
-results_dir.mkdir(exist_ok=True)
+# Crear carpeta de resultados si no existe
+results_dir = os.path.join(os.path.dirname(__file__), "..", "results")
+os.makedirs(results_dir, exist_ok=True)
 
-output_csv = results_dir / "benchmark_results.csv"
-output_txt = results_dir / "benchmark_summary.txt"
+# Determinar sistema operativo
+is_windows = platform.system() == "Windows"
 
-def run_benchmark(duration=10):
-    print("⏱️ Ejecutando benchmark por", duration, "segundos...")
-    cpu_data = []
-    memory_data = []
+# Preguntar entorno
+env = ""
+while env.lower() not in ["vm", "docker"]:
+    env = input("¿Estás ejecutando esto en 'vm' o 'docker'? ").strip().lower()
 
-    for _ in range(duration):
-        cpu = psutil.cpu_percent(interval=1)
-        mem = psutil.virtual_memory().percent
-        cpu_data.append(cpu)
-        memory_data.append(mem)
+# Configuración
+duration = 60  # segundos
+interval = 1
+data = []
 
+print(f"📊 Iniciando benchmark por {duration} segundos en entorno {env.upper()}...")
+
+start_time = time.time()
+
+while time.time() - start_time < duration:
     timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    cpu_percent = psutil.cpu_percent(interval=None)
+    memory = psutil.virtual_memory()
+    num_procs = len(psutil.pids())
 
-    with open(output_csv, "w", newline="") as csvfile:
-        writer = csv.writer(csvfile)
-        writer.writerow(["Time", "CPU_Usage", "Memory_Usage"])
-        for i in range(duration):
-            writer.writerow([i + 1, cpu_data[i], memory_data[i]])
+    if not is_windows:
+        load1, load5, load15 = os.getloadavg()
+    else:
+        load1 = load5 = load15 = 0.0
 
-    with open(output_txt, "w") as txtfile:
-        txtfile.write(f"Benchmark ejecutado: {timestamp}\n")
-        txtfile.write(f"Duración: {duration} segundos\n")
-        txtfile.write(f"Promedio CPU: {sum(cpu_data)/len(cpu_data):.2f}%\n")
-        txtfile.write(f"Promedio Memoria: {sum(memory_data)/len(memory_data):.2f}%\n")
+    data.append({
+        "timestamp": timestamp,
+        "cpu_percent": cpu_percent,
+        "memory_percent": memory.percent,
+        "memory_used_mb": memory.used / (1024 * 1024),
+        "load_avg_1": load1,
+        "load_avg_5": load5,
+        "load_avg_15": load15,
+        "num_processes": num_procs,
+        "environment": env
+    })
 
-    print("✅ Benchmark completo. Resultados guardados en 'results/'.")
+    time.sleep(interval)
 
-if __name__ == "__main__":
-    run_benchmark()
+print("✅ Benchmark finalizado.")
+
+# Guardar CSV en modo append
+csv_path = os.path.join(results_dir, f"benchmark_{env}.csv")
+file_exists = os.path.isfile(csv_path)
+
+with open(csv_path, "a", newline="") as csvfile:
+    fieldnames = data[0].keys()
+    writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+
+    if not file_exists:
+        writer.writeheader()
+    writer.writerows(data)
+
+# Guardar resumen TXT aparte
+now = datetime.now().strftime("%Y%m%d_%H%M%S")
+txt_path = os.path.join(results_dir, f"benchmark_{env}_{now}.txt")
+with open(txt_path, "w") as f:
+    f.write(f"Benchmark ejecutado en entorno: {env.upper()}\n")
+    f.write(f"Duración: {duration} segundos\n")
+    f.write(f"Número de muestras: {len(data)}\n\n")
+    f.write("Resumen final:\n")
+    f.write(f"CPU promedio: {sum(d['cpu_percent'] for d in data)/len(data):.2f}%\n")
+    f.write(f"Memoria promedio: {sum(d['memory_percent'] for d in data)/len(data):.2f}%\n")
+    f.write(f"Procesos promedio: {sum(d['num_processes'] for d in data)/len(data):.2f}\n")
+
+print(f"📁 Resultados agregados a: {csv_path}")
+print(f"📝 Resumen guardado en: {txt_path}")
