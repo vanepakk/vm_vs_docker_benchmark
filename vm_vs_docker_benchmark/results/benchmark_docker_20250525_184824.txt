@@ -1,0 +1,8 @@
+Benchmark ejecutado en entorno: DOCKER
+Duraci�n: 60 segundos
+N�mero de muestras: 59
+
+Resumen final:
+CPU promedio: 17.23%
+Memoria promedio: 84.36%
+Procesos promedio: 255.59
