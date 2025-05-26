@@ -79,6 +79,18 @@ Esto instalará:
 
 - JupyterLab
 
+## 🧪 Automatización del entorno VM & DOCKER
+
+
+Puedes usar los siguientes scripts para automatizar la instalación del entorno:
+
+```bash
+cd scripts
+bash vm_setup.sh         # Configuración para VM
+bash sh docker_setup.sh     # Configuración para Docker (edited)
+```
+
+
 ## 🚀 Cómo ejecutar el benchmark
 
 1. Iniciar el servidor simulado
@@ -159,12 +171,3 @@ Si usas WSL, asegúrate de que Jupyter y los scripts corren en el mismo entorno.
 
 - JupyterLab o Jupyter Notebook
 
-## Los resultados se encuentran en archivos .csv dentro de `results/`.
-
-El notebook vm_vs_docker_comparison.ipynb genera gráficos como:
-
-- Evolución temporal de la latencia
-
-- CPU y RAM a lo largo del tiempo
-
-(Opcional) Gráfico radar (de araña) para comparar rendimiento global.
