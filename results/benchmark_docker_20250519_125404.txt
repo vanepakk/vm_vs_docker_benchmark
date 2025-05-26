@@ -1,6 +1,6 @@
 Benchmark ejecutado en entorno: DOCKER
-Duración: 60 segundos
-Número de muestras: 60
+Duracion: 60 segundos
+Numero de muestras: 60
 
 Resumen final:
 CPU promedio: 2.07%

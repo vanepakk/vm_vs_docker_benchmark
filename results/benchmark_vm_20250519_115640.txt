@@ -1,6 +1,6 @@
 Benchmark ejecutado en entorno: VM
-Duraci�n: 60 segundos
-N�mero de muestras: 60
+Duracion: 60 segundos
+Numero de muestras: 60
 
 Resumen final:
 CPU promedio: 2.26%
