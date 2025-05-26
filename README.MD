@@ -127,7 +127,18 @@ Basados en los archivos CSV generados por el benchmark.
 
 ---
 
-AQUI FOTOS DE LOS GRAFICOS DE `/notebooks` Y archivos .txt de la carpeta `/results`.
+| 🖥️ Virtual Machine | 🐳 Docker |
+|--------------------------|------------------|
+| ![VM](results/Benchmark_VM.png) | ![Docker](results/Benchmark_Docker.png) |
+
+
+<p align="center">
+  <img src="notebooks/Uso_CPU_comparison.png" alt="Uso CPU" width="600"/>
+</p> 
+
+<p align="center">
+  <img src="notebooks/Uso_RAM_Comparison.png" alt="Uso RAM" width="600"/>
+</p> 
 
 ---
 
