@@ -2,6 +2,63 @@
 
 Este proyecto compara el rendimiento de una aplicación ejecutándose en una Máquina Virtual (VM) vs Docker. Utiliza un servidor Flask y realiza benchmarks de CPU, RAM y latencia durante 60 segundos. Los resultados se guardan en archivos CSV y TXT, y se visualizan con un Jupyter Notebook.
 
+## 🧱 Máquinas Virtuales vs Contenedores Docker
+¿Qué es una Máquina Virtual (VM)?
+Una máquina virtual es una emulación completa de un sistema operativo que se ejecuta sobre otro sistema operativo anfitrión, usando un hipervisor (como VirtualBox o VMware). Cada VM tiene su propio kernel, memoria, disco y red virtualizados.
+
+### ✅ Ventajas:
+- Aislamiento total del sistema huésped.
+
+- Permiten ejecutar diferentes sistemas operativos.
+
+- Muy útil para simular entornos de producción.
+
+### ❌ Desventajas:
+- Requieren más recursos (RAM, CPU, almacenamiento).
+
+- Más lentas para iniciar y ejecutar procesos.
+
+- Administración más pesada comparado con contenedores.
+
+## ¿Qué es un Contenedor Docker?
+Un contenedor Docker es una unidad ligera y portable que empaqueta una aplicación y todas sus dependencias, ejecutándose sobre el kernel del sistema anfitrión. A diferencia de las VMs, los contenedores no requieren un sistema operativo completo, solo lo necesario para que la aplicación funcione.
+
+### ✅ Ventajas:
+- Muy ligeros y rápidos de iniciar.
+
+- Aislamiento eficiente de aplicaciones.
+
+- Fácil despliegue y escalabilidad.
+
+- Uso eficiente de recursos del sistema.
+
+### ❌ Desventajas:
+- Aislamiento menor comparado con VMs (usan el mismo kernel del host).
+
+- Dependencia del sistema operativo base.
+
+- Puede ser más complejo asegurar ciertos entornos si se mezclan contenedores mal diseñados.
+
+## 🕹️ Relación con el Proyecto (Tetris + Benchmarking)
+Este proyecto consiste en un servidor de Tetris implementado con HTML, JavaScript y Python, que incluye un sistema de benchmarking automatizado para comparar el rendimiento al ejecutarlo en diferentes entornos.
+
+### ¿Por qué usar VM y Docker?
+El objetivo es comparar cómo se comporta el servidor de Tetris en una máquina virtual frente a un contenedor Docker en términos de:
+
+- Tiempo de respuesta.
+
+- Uso de recursos.
+
+- Estabilidad bajo carga.
+
+- Benchmarking en contexto:
+
+El archivo benchmark.py ejecuta pruebas de carga durante un minuto mientras el servidor corre, y guarda los resultados en la carpeta results/. Esto permite medir cómo cada entorno afecta al rendimiento del juego.
+
+- Utilidad real:
+
+Esta comparación ayuda a entender cuál tecnología es más eficiente o conveniente para desplegar aplicaciones web como este Tetris, dependiendo de las necesidades del proyecto (por ejemplo, desarrollo local, producción, escalado, etc.).
+
 ## Configuración del entorno de prueba
 Host: máquina física con sistema Linux o WSL2, 8 GB RAM, 4 núcleos.
 
@@ -170,4 +227,50 @@ Si usas WSL, asegúrate de que Jupyter y los scripts corren en el mismo entorno.
 - Docker (si usarás el contenedor)
 
 - JupyterLab o Jupyter Notebook
+
+## 🔐 Aislamiento y Seguridad
+### 🧍‍♂️ Aislamiento
+El aislamiento es fundamental cuando se comparan entornos como máquinas virtuales (VM) y contenedores Docker. Este proyecto utiliza ambos enfoques para entender cómo afectan al rendimiento y la seguridad del servidor Tetris.
+
+#### En Máquinas Virtuales:
+- Cada VM tiene su propio sistema operativo, kernel, red y almacenamiento virtualizado.
+
+- El aislamiento es casi total, lo que evita interferencias con el sistema anfitrión o entre VMs.
+
+- Ideal para ejecutar múltiples entornos distintos (por ejemplo, Linux y Windows en la misma máquina).
+
+#### En Docker:
+- Los contenedores comparten el kernel del sistema anfitrión, pero se aíslan mediante espacios de nombres (namespaces) y control de recursos (cgroups).
+
+- El aislamiento es más ligero, lo que mejora el rendimiento pero puede ser menos robusto en comparación con VMs.
+
+- Se recomienda seguir buenas prácticas (no usar contenedores privilegiados, gestionar permisos, etc.).
+
+## 🛡️ Seguridad
+La seguridad en ambos entornos impacta directamente en la confiabilidad del servidor Tetris, especialmente al ejecutar pruebas automatizadas con cargas altas.
+
+#### Seguridad en Máquinas Virtuales:
+- Cada VM actúa como una caja negra: una vulnerabilidad dentro de una VM no afecta directamente al host.
+
+- Mejor contención en caso de ataques o errores graves.
+
+- Parches y actualizaciones pueden ser gestionados como si fueran máquinas físicas.
+
+#### Seguridad en Docker:
+- Requiere configuración cuidadosa para evitar accesos indebidos al sistema anfitrión.
+
+- El uso de imágenes oficiales y verificadas es clave para reducir riesgos.
+
+- Puede combinarse con herramientas como AppArmor, SELinux o seccomp para reforzar la seguridad.
+
+## 🔍 Aplicación al Proyecto
+En el contexto del servidor Tetris con benchmarking:
+
+- Entornos aislados = resultados confiables: Al ejecutar las pruebas en contenedores y VMs separadas, se evita que otros procesos afecten los resultados del benchmark.
+
+- Simulación de entornos reales: Permite probar el rendimiento como si el servidor se desplegara en producción, evaluando la seguridad y estabilidad de cada opción.
+
+- Mitigación de riesgos: El aislamiento previene que errores en el servidor de Tetris (por ejemplo, scripts maliciosos o cargas pesadas) afecten al sistema anfitrión.
+
+
 
