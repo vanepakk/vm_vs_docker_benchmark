@@ -2,6 +2,13 @@
 
 Este proyecto compara el rendimiento de una aplicación ejecutándose en una Máquina Virtual (VM) vs Docker. Utiliza un servidor Flask y realiza benchmarks de CPU, RAM y latencia durante 60 segundos. Los resultados se guardan en archivos CSV y TXT, y se visualizan con un Jupyter Notebook.
 
+## 📘 Introducción
+Este proyecto consiste en el desarrollo de un servidor web de Tetris, construido con tecnologías como HTML, JavaScript, CSS y Python, que incluye un módulo de benchmarking automatizado. El objetivo principal es analizar el rendimiento y comportamiento del servidor cuando se ejecuta en distintos entornos de virtualización: máquinas virtuales (VM) y contenedores Docker.
+
+A través de scripts de configuración (vm_setup.sh y docker_setup.sh) y un archivo de benchmarking (benchmark.py), se generan métricas de rendimiento que permiten comparar objetivamente el impacto de cada entorno en la ejecución del servidor. El sistema está diseñado para simular cargas reales y registrar resultados en la carpeta results/, facilitando el análisis posterior.
+
+Este enfoque no solo permite evaluar el desempeño técnico del servidor Tetris, sino también explorar conceptos clave como el aislamiento, la seguridad, la eficiencia en el uso de recursos, y la portabilidad de aplicaciones web en distintos entornos de despliegue.
+
 ## 🧱 Máquinas Virtuales vs Contenedores Docker
 ¿Qué es una Máquina Virtual (VM)?
 Una máquina virtual es una emulación completa de un sistema operativo que se ejecuta sobre otro sistema operativo anfitrión, usando un hipervisor (como VirtualBox o VMware). Cada VM tiene su propio kernel, memoria, disco y red virtualizados.
@@ -272,5 +279,8 @@ En el contexto del servidor Tetris con benchmarking:
 
 - Mitigación de riesgos: El aislamiento previene que errores en el servidor de Tetris (por ejemplo, scripts maliciosos o cargas pesadas) afecten al sistema anfitrión.
 
+## ✅ Conclusión
+El proyecto Tetris con benchmarking proporciona una base sólida para entender cómo influyen las tecnologías de virtualización en el comportamiento de aplicaciones web en tiempo real. Al comparar entornos como máquinas virtuales y contenedores Docker, se obtiene una visión práctica sobre las diferencias en rendimiento, aislamiento, seguridad y eficiencia operativa.
 
+Los resultados de las pruebas permiten tomar decisiones informadas sobre qué entorno es más adecuado según el contexto: ya sea desarrollo local, pruebas de carga o despliegue en producción. Además, este ejercicio fortalece la comprensión de herramientas modernas de infraestructura y promueve buenas prácticas en el diseño, monitoreo y despliegue de aplicaciones web escalables y seguras.
 
