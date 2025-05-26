@@ -1,18 +1,16 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
   <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Tetris</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <h1>Tetris</h1>
-  <h2>CHATGPT NO HACE QUE FUNCIONE EL TETRIS</h2>
-  <div id="ui">
-    <button id="startBtn">Empezar Juego</button>
-    <p>Puntaje: <span id="score">0</span></p>
-  </div>
+  <button id="startBtn">Empezar Juego</button>
+  <div class="score">Puntaje: <span id="score">0</span></div>
   <canvas id="tetris" width="240" height="400"></canvas>
-  <script src="script.js"></script>
+  <script src="game.js"></script>
 </body>
 </html>
